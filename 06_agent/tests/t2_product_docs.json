@@ -1,0 +1,277 @@
+{
+  "content": [
+    {
+      "thinking": {
+        "signature": "ErgDCpgBCBEQARgCKkDr0l2n60aiZEODeX4xMDdYmMplStDpp5JD4pFKHK5z023vwGJhpgG5h/TzsnqwRQaq9w2msJCfYZ7IzCaDUGmEMg1jbGF1ZGUtcXVpbmNlOABCCHRoaW5raW5nWgw0NjY5NzAxMDcyNTF6HnVwcm9mXzAxMUNlQnZNUFRYdUJ1TndBUXRDS2RRVagBm+Lo1AYSDKDTldrUpQgxVt9a5BoMBO+WfIUvvYNlinhEIjC7jjJSxWB9j9Py+hbZCX3K2ILsXx3XxLJ+P6yQXHYxVAioo4pXq11mx+AV+PzC2gMqzAFWokMObCh6QFT7BJHu4sV0/dGGN0H86uWkWHc4VlLw+Of3h06S/hDVPuVzafICG9bo92VF7sOMh0fVIN+F+oeKTpOoizsSlQVyTCTUQragi5zytzT75OSLgu9t9/8NuEwzxA7iYK8HEQhmJAiNAEBdmn04WvKmapuXGxrJDmk4hHQSw+HH6z7w2lWgh3TXRhpjpjU4ErocKnz+QXrkqt+pIHpBJb5/QBRCSF6LmM9XONU3AGiEjPxPL/kRfkyjtUoUqPh9WpOv0V2zhnMYAQ==",
+        "text": ""
+      },
+      "type": "thinking"
+    },
+    {
+      "tool_use": {
+        "client_side_execute": false,
+        "input": {
+          "analytical_search": false,
+          "columns": [
+            "PRODUCT_ID",
+            "PRODUCT_NAME"
+          ],
+          "query": "Meridian Kritis Guard Plus benefits and exclusions coverage critical illness"
+        },
+        "name": "search_product_docs",
+        "tool_use_id": "toolu_bdrk_01Wb9QVuhHMn4JiJbDZ4B1bn",
+        "type": "cortex_search"
+      },
+      "type": "tool_use"
+    },
+    {
+      "tool_result": {
+        "content": [
+          {
+            "json": {
+              "search_results": [
+                {
+                  "doc_id": "P012",
+                  "doc_title": "Meridian Kritis Guard Plus",
+                  "id": "cs_8b7fdc08-6fe3-42ed-8ae6-7f264a71ade7",
+                  "search_service_name": "search_product_docs",
+                  "source_id": 0,
+                  "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n# Key Benefits\n\n- Comprehensive Critical Illness Coverage: Up to Rp 2,000,000,000 sum assured for 36 covered critical illnesses including cancer, heart attack, and stroke\n- Immediate Lump Sum Payment: 100% of sum assured paid immediately upon diagnosis of covered critical illness\n- Premium Waiver Benefit: All future premiums waived after critical illness claim, with policy remaining in force\n- Death Benefit Protection: 110% of total premiums paid if death occurs before critical illness claim\n- Guaranteed Renewability: Policy cannot be cancelled by the insurer due to health deterioration\n- No Medical Examination: Simplified underwriting for sum assured up to Rp 500,000,000 for applicants under age 45\n- Inflation Protection: Annual automatic sum assured increase of 5% available as optional benefit\n\n# Coverage Details\n\n|  Critical Illness Category | Sum Assured Range | Waiting Period  |\n| --- | --- | --- |\n|  Major Cancers (Stage 2-4) | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Heart Attack & Stroke | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Kidney Failure | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Major Organ Transplant | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Paralysis & Blindness | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Early Stage Conditions | Rp 50,000,000 - Rp 500,000,000 | 90 days  |"
+                },
+                {
+                  "doc_id": "P012",
+                  "doc_title": "Meridian Kritis Guard Plus",
+                  "id": "cs_9f6c30cb-d375-4852-867e-eaf36096be83",
+                  "search_service_name": "search_product_docs",
+                  "source_id": 1,
+                  "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n## Important Notes\n\nThis brochure contains illustrative information about Meridian Kritis Guard Plus and is not a contract of insurance. Actual policy terms, conditions, benefits, and premiums may vary based on individual circumstances, underwriting assessment, and final policy wording. All coverage is subject to policy terms, conditions, and exclusions as detailed in the official policy document. Premium rates are subject to change based on claims experience and regulatory requirements. Please consult with your licensed Meridian Life agent for complete policy details and personalized quotations. This product is distributed exclusively through Meridian Life's authorized agency network.\n\nMeridian Life is a fictional insurer created for a software demonstration. All products, figures, and terms in this document are illustrative only and do not constitute an insurance contract, an offer, or financial advice. Document reference: MRD-Crit-012 / P012."
+                },
+                {
+                  "doc_id": "P012",
+                  "doc_title": "Meridian Kritis Guard Plus",
+                  "id": "cs_c34187b7-877b-40da-a281-f019d319c4c1",
+                  "search_service_name": "search_product_docs",
+                  "source_id": 2,
+                  "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n## Exclusions\n\n- Suicide or intentionally self-inflicted injury within the first 24 months of policy commencement\n- Critical illness directly caused by self-inflicted injury, substance abuse, or illegal drug use\n- War, terrorism, civil unrest, or participation in military operations\n- Pre-existing medical conditions not disclosed during application or underwriting process\n- Participation in hazardous sports including mountaineering, motor racing, skydiving, and professional martial arts\n- Critical illness resulting from illegal acts, criminal activities, or violation of law\n- Congenital conditions diagnosed within the first 12 months of policy inception\n- Treatment received outside Indonesia without prior approval from the insurer\n\n## Waiting Periods and Grace Period\n\nA 30-day grace period applies for premium payment from the due date. During this grace period, full coverage remains in effect. If premium remains unpaid after the grace period expires, the policy will automatically lapse and coverage will cease immediately.\n\nLapsed policies may be reinstated within 24 months of the lapse date, subject to payment of all outstanding premiums with interest at 6% per annum and satisfactory evidence of insurability. Medical underwriting equivalent to a new application may be required for reinstatement. No claims will be payable for critical illnesses diagnosed during the period when the policy was lapsed."
+                },
+                {
+                  "doc_id": "P010",
+                  "doc_title": "Meridian Kritis Guard Essential",
+                  "id": "cs_84df6b03-42f0-47bf-a1aa-6a394d04d00d",
+                  "search_service_name": "search_product_docs",
+                  "source_id": 3,
+                  "text": "Product: Meridian Kritis Guard Essential (MRD-Crit-010, Critical Illness)\n\n# Key Benefits\n\n- Comprehensive Critical Illness Coverage - Up to Rp 500,000,000 sum assured for 36 major critical illnesses including cancer, heart attack, and stroke\n- Immediate Lump Sum Payment - 100% of sum assured paid immediately upon diagnosis of covered critical illness\n- Premium Waiver Benefit - All future premiums waived after valid critical illness claim, policy remains active\n- Death Benefit Protection - 110% of total premiums paid returned to beneficiaries if death occurs before critical illness claim\n- Annual Health Bonus - 2% premium discount for consecutive claim-free years, up to maximum 10% after 5 years\n- Free Annual Health Check - Complimentary basic health screening worth Rp 1,500,000 after 2nd policy year\n- 24/7 Medical Consultation - Unlimited telemedicine consultations with qualified doctors via Meridian Health app\n\n# Coverage Details\n\n|  Benefit Type | Sum Assured Range | Waiting Period  |\n| --- | --- | --- |\n|  Major Critical Illness (Cancer, Heart Attack, Stroke) | Rp 100,000,000 - Rp 500,000,000 | 90 days  |\n|  Organ Transplant | Rp 100,000,000 - Rp 500,000,000 | 90 days  |\n|  Kidney Failure | Rp 100,000,000 - Rp 500,000,000 | 90 days  |\n|  Other Critical Illnesses (33 conditions) | Rp 100,000,000 - Rp 500,000,000 | 90 days  |\n|  Accidental Critical Illness | Rp 100,000,000 - Rp 500,000,000 | No waiting period  |\n|  Death Benefit | 110% of premiums paid | No waiting period  |"
+                }
+              ],
+              "search_results_persist": {}
+            },
+            "type": "json"
+          }
+        ],
+        "name": "search_product_docs",
+        "status": "success",
+        "tool_use_id": "toolu_bdrk_01Wb9QVuhHMn4JiJbDZ4B1bn",
+        "type": "cortex_search"
+      },
+      "type": "tool_result"
+    },
+    {
+      "thinking": {
+        "text": "I have all the details for Meridian Kritis Guard Plus. Answer in English per instructions."
+      },
+      "type": "thinking"
+    },
+    {
+      "annotations": [
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 256,
+          "search_result_id": "cs_8b7fdc08-6fe3-42ed-8ae6-7f264a71ade7",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n# Key Benefits\n\n- Comprehensive Critical Illness Coverage: Up to Rp 2,000,000,000 sum assured for 36 covered critical illnesses including cancer, heart attack, and stroke\n- Immediate Lump Sum Payment: 100% of sum assured paid immediately upon diagnosis of covered critical illness\n- Premium Waiver Benefit: All future premiums waived after critical illness claim, with policy remaining in force\n- Death Benefit Protection: 110% of total premiums paid if death occurs before critical illness claim\n- Guaranteed Renewability: Policy cannot be cancelled by the insurer due to health deterioration\n- No Medical Examination: Simplified underwriting for sum assured up to Rp 500,000,000 for applicants under age 45\n- Inflation Protection: Annual automatic sum assured increase of 5% available as optional benefit\n\n# Coverage Details\n\n|  Critical Illness Category | Sum Assured Range | Waiting Period  |\n| --- | --- | --- |\n|  Major Cancers (Stage 2-4) | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Heart Attack & Stroke | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Kidney Failure | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Major Organ Transplant | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Paralysis & Blindness | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Early Stage Conditions | Rp 50,000,000 - Rp 500,000,000 | 90 days  |",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 346,
+          "search_result_id": "cs_8b7fdc08-6fe3-42ed-8ae6-7f264a71ade7",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n# Key Benefits\n\n- Comprehensive Critical Illness Coverage: Up to Rp 2,000,000,000 sum assured for 36 covered critical illnesses including cancer, heart attack, and stroke\n- Immediate Lump Sum Payment: 100% of sum assured paid immediately upon diagnosis of covered critical illness\n- Premium Waiver Benefit: All future premiums waived after critical illness claim, with policy remaining in force\n- Death Benefit Protection: 110% of total premiums paid if death occurs before critical illness claim\n- Guaranteed Renewability: Policy cannot be cancelled by the insurer due to health deterioration\n- No Medical Examination: Simplified underwriting for sum assured up to Rp 500,000,000 for applicants under age 45\n- Inflation Protection: Annual automatic sum assured increase of 5% available as optional benefit\n\n# Coverage Details\n\n|  Critical Illness Category | Sum Assured Range | Waiting Period  |\n| --- | --- | --- |\n|  Major Cancers (Stage 2-4) | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Heart Attack & Stroke | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Kidney Failure | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Major Organ Transplant | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Paralysis & Blindness | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Early Stage Conditions | Rp 50,000,000 - Rp 500,000,000 | 90 days  |",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 458,
+          "search_result_id": "cs_8b7fdc08-6fe3-42ed-8ae6-7f264a71ade7",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n# Key Benefits\n\n- Comprehensive Critical Illness Coverage: Up to Rp 2,000,000,000 sum assured for 36 covered critical illnesses including cancer, heart attack, and stroke\n- Immediate Lump Sum Payment: 100% of sum assured paid immediately upon diagnosis of covered critical illness\n- Premium Waiver Benefit: All future premiums waived after critical illness claim, with policy remaining in force\n- Death Benefit Protection: 110% of total premiums paid if death occurs before critical illness claim\n- Guaranteed Renewability: Policy cannot be cancelled by the insurer due to health deterioration\n- No Medical Examination: Simplified underwriting for sum assured up to Rp 500,000,000 for applicants under age 45\n- Inflation Protection: Annual automatic sum assured increase of 5% available as optional benefit\n\n# Coverage Details\n\n|  Critical Illness Category | Sum Assured Range | Waiting Period  |\n| --- | --- | --- |\n|  Major Cancers (Stage 2-4) | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Heart Attack & Stroke | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Kidney Failure | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Major Organ Transplant | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Paralysis & Blindness | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Early Stage Conditions | Rp 50,000,000 - Rp 500,000,000 | 90 days  |",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 551,
+          "search_result_id": "cs_8b7fdc08-6fe3-42ed-8ae6-7f264a71ade7",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n# Key Benefits\n\n- Comprehensive Critical Illness Coverage: Up to Rp 2,000,000,000 sum assured for 36 covered critical illnesses including cancer, heart attack, and stroke\n- Immediate Lump Sum Payment: 100% of sum assured paid immediately upon diagnosis of covered critical illness\n- Premium Waiver Benefit: All future premiums waived after critical illness claim, with policy remaining in force\n- Death Benefit Protection: 110% of total premiums paid if death occurs before critical illness claim\n- Guaranteed Renewability: Policy cannot be cancelled by the insurer due to health deterioration\n- No Medical Examination: Simplified underwriting for sum assured up to Rp 500,000,000 for applicants under age 45\n- Inflation Protection: Annual automatic sum assured increase of 5% available as optional benefit\n\n# Coverage Details\n\n|  Critical Illness Category | Sum Assured Range | Waiting Period  |\n| --- | --- | --- |\n|  Major Cancers (Stage 2-4) | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Heart Attack & Stroke | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Kidney Failure | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Major Organ Transplant | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Paralysis & Blindness | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Early Stage Conditions | Rp 50,000,000 - Rp 500,000,000 | 90 days  |",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 633,
+          "search_result_id": "cs_8b7fdc08-6fe3-42ed-8ae6-7f264a71ade7",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n# Key Benefits\n\n- Comprehensive Critical Illness Coverage: Up to Rp 2,000,000,000 sum assured for 36 covered critical illnesses including cancer, heart attack, and stroke\n- Immediate Lump Sum Payment: 100% of sum assured paid immediately upon diagnosis of covered critical illness\n- Premium Waiver Benefit: All future premiums waived after critical illness claim, with policy remaining in force\n- Death Benefit Protection: 110% of total premiums paid if death occurs before critical illness claim\n- Guaranteed Renewability: Policy cannot be cancelled by the insurer due to health deterioration\n- No Medical Examination: Simplified underwriting for sum assured up to Rp 500,000,000 for applicants under age 45\n- Inflation Protection: Annual automatic sum assured increase of 5% available as optional benefit\n\n# Coverage Details\n\n|  Critical Illness Category | Sum Assured Range | Waiting Period  |\n| --- | --- | --- |\n|  Major Cancers (Stage 2-4) | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Heart Attack & Stroke | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Kidney Failure | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Major Organ Transplant | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Paralysis & Blindness | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Early Stage Conditions | Rp 50,000,000 - Rp 500,000,000 | 90 days  |",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 710,
+          "search_result_id": "cs_8b7fdc08-6fe3-42ed-8ae6-7f264a71ade7",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n# Key Benefits\n\n- Comprehensive Critical Illness Coverage: Up to Rp 2,000,000,000 sum assured for 36 covered critical illnesses including cancer, heart attack, and stroke\n- Immediate Lump Sum Payment: 100% of sum assured paid immediately upon diagnosis of covered critical illness\n- Premium Waiver Benefit: All future premiums waived after critical illness claim, with policy remaining in force\n- Death Benefit Protection: 110% of total premiums paid if death occurs before critical illness claim\n- Guaranteed Renewability: Policy cannot be cancelled by the insurer due to health deterioration\n- No Medical Examination: Simplified underwriting for sum assured up to Rp 500,000,000 for applicants under age 45\n- Inflation Protection: Annual automatic sum assured increase of 5% available as optional benefit\n\n# Coverage Details\n\n|  Critical Illness Category | Sum Assured Range | Waiting Period  |\n| --- | --- | --- |\n|  Major Cancers (Stage 2-4) | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Heart Attack & Stroke | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Kidney Failure | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Major Organ Transplant | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Paralysis & Blindness | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Early Stage Conditions | Rp 50,000,000 - Rp 500,000,000 | 90 days  |",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 784,
+          "search_result_id": "cs_8b7fdc08-6fe3-42ed-8ae6-7f264a71ade7",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n# Key Benefits\n\n- Comprehensive Critical Illness Coverage: Up to Rp 2,000,000,000 sum assured for 36 covered critical illnesses including cancer, heart attack, and stroke\n- Immediate Lump Sum Payment: 100% of sum assured paid immediately upon diagnosis of covered critical illness\n- Premium Waiver Benefit: All future premiums waived after critical illness claim, with policy remaining in force\n- Death Benefit Protection: 110% of total premiums paid if death occurs before critical illness claim\n- Guaranteed Renewability: Policy cannot be cancelled by the insurer due to health deterioration\n- No Medical Examination: Simplified underwriting for sum assured up to Rp 500,000,000 for applicants under age 45\n- Inflation Protection: Annual automatic sum assured increase of 5% available as optional benefit\n\n# Coverage Details\n\n|  Critical Illness Category | Sum Assured Range | Waiting Period  |\n| --- | --- | --- |\n|  Major Cancers (Stage 2-4) | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Heart Attack & Stroke | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Kidney Failure | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Major Organ Transplant | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Paralysis & Blindness | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Early Stage Conditions | Rp 50,000,000 - Rp 500,000,000 | 90 days  |",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 1006,
+          "search_result_id": "cs_8b7fdc08-6fe3-42ed-8ae6-7f264a71ade7",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n# Key Benefits\n\n- Comprehensive Critical Illness Coverage: Up to Rp 2,000,000,000 sum assured for 36 covered critical illnesses including cancer, heart attack, and stroke\n- Immediate Lump Sum Payment: 100% of sum assured paid immediately upon diagnosis of covered critical illness\n- Premium Waiver Benefit: All future premiums waived after critical illness claim, with policy remaining in force\n- Death Benefit Protection: 110% of total premiums paid if death occurs before critical illness claim\n- Guaranteed Renewability: Policy cannot be cancelled by the insurer due to health deterioration\n- No Medical Examination: Simplified underwriting for sum assured up to Rp 500,000,000 for applicants under age 45\n- Inflation Protection: Annual automatic sum assured increase of 5% available as optional benefit\n\n# Coverage Details\n\n|  Critical Illness Category | Sum Assured Range | Waiting Period  |\n| --- | --- | --- |\n|  Major Cancers (Stage 2-4) | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Heart Attack & Stroke | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Kidney Failure | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Major Organ Transplant | Rp 100,000,000 - Rp 2,000,000,000 | 90 days  |\n|  Paralysis & Blindness | Rp 100,000,000 - Rp 1,500,000,000 | 90 days  |\n|  Early Stage Conditions | Rp 50,000,000 - Rp 500,000,000 | 90 days  |",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 1098,
+          "search_result_id": "cs_c34187b7-877b-40da-a281-f019d319c4c1",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n## Exclusions\n\n- Suicide or intentionally self-inflicted injury within the first 24 months of policy commencement\n- Critical illness directly caused by self-inflicted injury, substance abuse, or illegal drug use\n- War, terrorism, civil unrest, or participation in military operations\n- Pre-existing medical conditions not disclosed during application or underwriting process\n- Participation in hazardous sports including mountaineering, motor racing, skydiving, and professional martial arts\n- Critical illness resulting from illegal acts, criminal activities, or violation of law\n- Congenital conditions diagnosed within the first 12 months of policy inception\n- Treatment received outside Indonesia without prior approval from the insurer\n\n## Waiting Periods and Grace Period\n\nA 30-day grace period applies for premium payment from the due date. During this grace period, full coverage remains in effect. If premium remains unpaid after the grace period expires, the policy will automatically lapse and coverage will cease immediately.\n\nLapsed policies may be reinstated within 24 months of the lapse date, subject to payment of all outstanding premiums with interest at 6% per annum and satisfactory evidence of insurability. Medical underwriting equivalent to a new application may be required for reinstatement. No claims will be payable for critical illnesses diagnosed during the period when the policy was lapsed.",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 1187,
+          "search_result_id": "cs_c34187b7-877b-40da-a281-f019d319c4c1",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n## Exclusions\n\n- Suicide or intentionally self-inflicted injury within the first 24 months of policy commencement\n- Critical illness directly caused by self-inflicted injury, substance abuse, or illegal drug use\n- War, terrorism, civil unrest, or participation in military operations\n- Pre-existing medical conditions not disclosed during application or underwriting process\n- Participation in hazardous sports including mountaineering, motor racing, skydiving, and professional martial arts\n- Critical illness resulting from illegal acts, criminal activities, or violation of law\n- Congenital conditions diagnosed within the first 12 months of policy inception\n- Treatment received outside Indonesia without prior approval from the insurer\n\n## Waiting Periods and Grace Period\n\nA 30-day grace period applies for premium payment from the due date. During this grace period, full coverage remains in effect. If premium remains unpaid after the grace period expires, the policy will automatically lapse and coverage will cease immediately.\n\nLapsed policies may be reinstated within 24 months of the lapse date, subject to payment of all outstanding premiums with interest at 6% per annum and satisfactory evidence of insurability. Medical underwriting equivalent to a new application may be required for reinstatement. No claims will be payable for critical illnesses diagnosed during the period when the policy was lapsed.",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 1242,
+          "search_result_id": "cs_c34187b7-877b-40da-a281-f019d319c4c1",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n## Exclusions\n\n- Suicide or intentionally self-inflicted injury within the first 24 months of policy commencement\n- Critical illness directly caused by self-inflicted injury, substance abuse, or illegal drug use\n- War, terrorism, civil unrest, or participation in military operations\n- Pre-existing medical conditions not disclosed during application or underwriting process\n- Participation in hazardous sports including mountaineering, motor racing, skydiving, and professional martial arts\n- Critical illness resulting from illegal acts, criminal activities, or violation of law\n- Congenital conditions diagnosed within the first 12 months of policy inception\n- Treatment received outside Indonesia without prior approval from the insurer\n\n## Waiting Periods and Grace Period\n\nA 30-day grace period applies for premium payment from the due date. During this grace period, full coverage remains in effect. If premium remains unpaid after the grace period expires, the policy will automatically lapse and coverage will cease immediately.\n\nLapsed policies may be reinstated within 24 months of the lapse date, subject to payment of all outstanding premiums with interest at 6% per annum and satisfactory evidence of insurability. Medical underwriting equivalent to a new application may be required for reinstatement. No claims will be payable for critical illnesses diagnosed during the period when the policy was lapsed.",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 1280,
+          "search_result_id": "cs_c34187b7-877b-40da-a281-f019d319c4c1",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n## Exclusions\n\n- Suicide or intentionally self-inflicted injury within the first 24 months of policy commencement\n- Critical illness directly caused by self-inflicted injury, substance abuse, or illegal drug use\n- War, terrorism, civil unrest, or participation in military operations\n- Pre-existing medical conditions not disclosed during application or underwriting process\n- Participation in hazardous sports including mountaineering, motor racing, skydiving, and professional martial arts\n- Critical illness resulting from illegal acts, criminal activities, or violation of law\n- Congenital conditions diagnosed within the first 12 months of policy inception\n- Treatment received outside Indonesia without prior approval from the insurer\n\n## Waiting Periods and Grace Period\n\nA 30-day grace period applies for premium payment from the due date. During this grace period, full coverage remains in effect. If premium remains unpaid after the grace period expires, the policy will automatically lapse and coverage will cease immediately.\n\nLapsed policies may be reinstated within 24 months of the lapse date, subject to payment of all outstanding premiums with interest at 6% per annum and satisfactory evidence of insurability. Medical underwriting equivalent to a new application may be required for reinstatement. No claims will be payable for critical illnesses diagnosed during the period when the policy was lapsed.",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 1368,
+          "search_result_id": "cs_c34187b7-877b-40da-a281-f019d319c4c1",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n## Exclusions\n\n- Suicide or intentionally self-inflicted injury within the first 24 months of policy commencement\n- Critical illness directly caused by self-inflicted injury, substance abuse, or illegal drug use\n- War, terrorism, civil unrest, or participation in military operations\n- Pre-existing medical conditions not disclosed during application or underwriting process\n- Participation in hazardous sports including mountaineering, motor racing, skydiving, and professional martial arts\n- Critical illness resulting from illegal acts, criminal activities, or violation of law\n- Congenital conditions diagnosed within the first 12 months of policy inception\n- Treatment received outside Indonesia without prior approval from the insurer\n\n## Waiting Periods and Grace Period\n\nA 30-day grace period applies for premium payment from the due date. During this grace period, full coverage remains in effect. If premium remains unpaid after the grace period expires, the policy will automatically lapse and coverage will cease immediately.\n\nLapsed policies may be reinstated within 24 months of the lapse date, subject to payment of all outstanding premiums with interest at 6% per annum and satisfactory evidence of insurability. Medical underwriting equivalent to a new application may be required for reinstatement. No claims will be payable for critical illnesses diagnosed during the period when the policy was lapsed.",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 1425,
+          "search_result_id": "cs_c34187b7-877b-40da-a281-f019d319c4c1",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n## Exclusions\n\n- Suicide or intentionally self-inflicted injury within the first 24 months of policy commencement\n- Critical illness directly caused by self-inflicted injury, substance abuse, or illegal drug use\n- War, terrorism, civil unrest, or participation in military operations\n- Pre-existing medical conditions not disclosed during application or underwriting process\n- Participation in hazardous sports including mountaineering, motor racing, skydiving, and professional martial arts\n- Critical illness resulting from illegal acts, criminal activities, or violation of law\n- Congenital conditions diagnosed within the first 12 months of policy inception\n- Treatment received outside Indonesia without prior approval from the insurer\n\n## Waiting Periods and Grace Period\n\nA 30-day grace period applies for premium payment from the due date. During this grace period, full coverage remains in effect. If premium remains unpaid after the grace period expires, the policy will automatically lapse and coverage will cease immediately.\n\nLapsed policies may be reinstated within 24 months of the lapse date, subject to payment of all outstanding premiums with interest at 6% per annum and satisfactory evidence of insurability. Medical underwriting equivalent to a new application may be required for reinstatement. No claims will be payable for critical illnesses diagnosed during the period when the policy was lapsed.",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 1486,
+          "search_result_id": "cs_c34187b7-877b-40da-a281-f019d319c4c1",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n## Exclusions\n\n- Suicide or intentionally self-inflicted injury within the first 24 months of policy commencement\n- Critical illness directly caused by self-inflicted injury, substance abuse, or illegal drug use\n- War, terrorism, civil unrest, or participation in military operations\n- Pre-existing medical conditions not disclosed during application or underwriting process\n- Participation in hazardous sports including mountaineering, motor racing, skydiving, and professional martial arts\n- Critical illness resulting from illegal acts, criminal activities, or violation of law\n- Congenital conditions diagnosed within the first 12 months of policy inception\n- Treatment received outside Indonesia without prior approval from the insurer\n\n## Waiting Periods and Grace Period\n\nA 30-day grace period applies for premium payment from the due date. During this grace period, full coverage remains in effect. If premium remains unpaid after the grace period expires, the policy will automatically lapse and coverage will cease immediately.\n\nLapsed policies may be reinstated within 24 months of the lapse date, subject to payment of all outstanding premiums with interest at 6% per annum and satisfactory evidence of insurability. Medical underwriting equivalent to a new application may be required for reinstatement. No claims will be payable for critical illnesses diagnosed during the period when the policy was lapsed.",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 1556,
+          "search_result_id": "cs_c34187b7-877b-40da-a281-f019d319c4c1",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n## Exclusions\n\n- Suicide or intentionally self-inflicted injury within the first 24 months of policy commencement\n- Critical illness directly caused by self-inflicted injury, substance abuse, or illegal drug use\n- War, terrorism, civil unrest, or participation in military operations\n- Pre-existing medical conditions not disclosed during application or underwriting process\n- Participation in hazardous sports including mountaineering, motor racing, skydiving, and professional martial arts\n- Critical illness resulting from illegal acts, criminal activities, or violation of law\n- Congenital conditions diagnosed within the first 12 months of policy inception\n- Treatment received outside Indonesia without prior approval from the insurer\n\n## Waiting Periods and Grace Period\n\nA 30-day grace period applies for premium payment from the due date. During this grace period, full coverage remains in effect. If premium remains unpaid after the grace period expires, the policy will automatically lapse and coverage will cease immediately.\n\nLapsed policies may be reinstated within 24 months of the lapse date, subject to payment of all outstanding premiums with interest at 6% per annum and satisfactory evidence of insurability. Medical underwriting equivalent to a new application may be required for reinstatement. No claims will be payable for critical illnesses diagnosed during the period when the policy was lapsed.",
+          "type": "cortex_search_citation"
+        },
+        {
+          "doc_id": "P012",
+          "doc_title": "Meridian Kritis Guard Plus",
+          "index": 1743,
+          "search_result_id": "cs_c34187b7-877b-40da-a281-f019d319c4c1",
+          "text": "Product: Meridian Kritis Guard Plus (MRD-Crit-012, Critical Illness)\n\n## Exclusions\n\n- Suicide or intentionally self-inflicted injury within the first 24 months of policy commencement\n- Critical illness directly caused by self-inflicted injury, substance abuse, or illegal drug use\n- War, terrorism, civil unrest, or participation in military operations\n- Pre-existing medical conditions not disclosed during application or underwriting process\n- Participation in hazardous sports including mountaineering, motor racing, skydiving, and professional martial arts\n- Critical illness resulting from illegal acts, criminal activities, or violation of law\n- Congenital conditions diagnosed within the first 12 months of policy inception\n- Treatment received outside Indonesia without prior approval from the insurer\n\n## Waiting Periods and Grace Period\n\nA 30-day grace period applies for premium payment from the due date. During this grace period, full coverage remains in effect. If premium remains unpaid after the grace period expires, the policy will automatically lapse and coverage will cease immediately.\n\nLapsed policies may be reinstated within 24 months of the lapse date, subject to payment of all outstanding premiums with interest at 6% per annum and satisfactory evidence of insurability. Medical underwriting equivalent to a new application may be required for reinstatement. No claims will be payable for critical illnesses diagnosed during the period when the policy was lapsed.",
+          "type": "cortex_search_citation"
+        }
+      ],
+      "text": "Here are the benefits and exclusions of **Meridian Kritis Guard Plus** (a critical illness product):\n\n**Key Benefits**\n- Comprehensive critical illness coverage up to Rp 2 B sum assured across 36 covered illnesses including cancer, heart attack, and stroke\n- Immediate lump sum: 100% of sum assured paid on diagnosis of a covered critical illness\n- Premium waiver: all future premiums waived after a critical illness claim, with the policy remaining in force\n- Death benefit: 110% of total premiums paid if death occurs before a critical illness claim\n- Guaranteed renewability \u2014 the insurer cannot cancel due to health deterioration\n- No medical exam for sum assured up to Rp 500 M for applicants under age 45\n- Optional inflation protection: automatic 5% annual sum assured increase\n\nMost illness categories (major cancers stage 2\u20134, heart attack & stroke, kidney failure, organ transplant, paralysis & blindness) carry a **90-day waiting period**, with early-stage conditions covered from Rp 50 M\u2013500 M.\n\n**Exclusions**\n- Suicide or intentionally self-inflicted injury within the first 24 months\n- Critical illness caused by self-inflicted injury, substance abuse, or illegal drug use\n- War, terrorism, civil unrest, or military operations\n- Undisclosed pre-existing conditions\n- Hazardous sports (mountaineering, motor racing, skydiving, professional martial arts)\n- Illegal acts, criminal activities, or violation of law\n- Congenital conditions diagnosed within the first 12 months\n- Treatment received outside Indonesia without prior insurer approval\n\nA 30-day grace period applies for premium payment; lapsed policies may be reinstated within 24 months subject to outstanding premiums plus 6% p.a. interest and evidence of insurability.\n\n(source: Meridian Kritis Guard Plus brochure)\n\nSource: Cortex Search on the Meridian product brochures.",
+      "type": "text"
+    },
+    {
+      "suggested_queries": [
+        {
+          "query": "How does Meridian Kritis Guard Plus compare to Meridian Kritis Guard Essential in benefits and sum assured?"
+        },
+        {
+          "query": "What are the illustrative premium rates by age band for Meridian Kritis Guard Plus?"
+        },
+        {
+          "query": "What optional riders are available for Meridian Kritis Guard Plus?"
+        }
+      ],
+      "type": "suggested_queries"
+    }
+  ],
+  "metadata": {
+    "usage": {
+      "tokens_consumed": [
+        {
+          "context_window": 1000000,
+          "input_tokens": {
+            "cache_read": 53174,
+            "cache_write": 7312,
+            "total": 60492,
+            "uncached": 6
+          },
+          "model_name": "claude-opus-4-8",
+          "output_tokens": {
+            "total": 1716
+          }
+        },
+        {
+          "context_window": 32768,
+          "input_tokens": {
+            "cache_read": 64,
+            "cache_write": 0,
+            "total": 2281,
+            "uncached": 2217
+          },
+          "model_name": "cygnal-8b-ipi",
+          "output_tokens": {
+            "total": 23
+          }
+        }
+      ]
+    }
+  },
+  "role": "assistant",
+  "schema_version": "v2",
+  "sequence_number": 156,
+  "status": "completed"
+}
