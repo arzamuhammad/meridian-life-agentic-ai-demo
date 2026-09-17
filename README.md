@@ -419,8 +419,21 @@ agent. There is no error message for this — the numbers are simply wrong.
 SELECT * FROM INSURANCE_DEMO.CORE.ML_MODEL_METRICS;
 ```
 
-You should see **TEST ROC-AUC ≈ 0.828**, PR-AUC ≈ 0.314, recall@top-10% ≈ 0.590,
-Brier 0.0281 versus a 0.0334 baseline.
+You should see **TEST ROC-AUC ≈ 0.827**, PR-AUC ≈ 0.312, recall@top-10% ≈ 0.592,
+Brier 0.0282 versus a 0.0334 baseline. Full run, measured on Snowflake:
+
+| Split | ROC-AUC | PR-AUC | recall@top-10% | Brier |
+|---|---|---|---|---|
+| TRAIN | 0.9311 | 0.5522 | 0.7803 | 0.0177 |
+| VALID | 0.8456 | 0.3951 | 0.5938 | 0.0265 |
+| **TEST** | **0.8274** | **0.3115** | **0.5915** | **0.0282** |
+
+TEST is 41,217 rows with 1,427 positives, a 3.46% base rate.
+
+Expect the third decimal to move a little. Snowflake's Anaconda channel ships
+**xgboost 3.3.0**, while the `.py` variant of this step run on a laptop typically
+resolves an older XGBoost; that difference alone moves TEST ROC-AUC between 0.827
+and 0.828. Anything in that band is a healthy run.
 
 **If you see 0.97, something is wrong.** Our first run hit 0.9725 — not from temporal leakage,
 but because the generator made the pre-lapse late-payment ramp an almost perfect function of
@@ -430,7 +443,8 @@ policies have a late episode and recover, and the ramp was widened to eight mont
 model that scores 0.97 on a business problem like this is not impressive, it is broken.
 
 Ablation, to prove the features earn their place: tenure only 0.711 → plus billing 0.811 →
-full feature set 0.828.
+full feature set 0.827. The notebook prints these three lines but does not persist them,
+so read them from the cell output rather than from `ML_MODEL_METRICS`.
 
 ### A documented limitation of M6
 

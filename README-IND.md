@@ -428,8 +428,21 @@ menunjuk ke agen yang salah. Tidak ada error apa pun untuk kasus ini — angkany
 SELECT * FROM INSURANCE_DEMO.CORE.ML_MODEL_METRICS;
 ```
 
-Anda seharusnya melihat **TEST ROC-AUC ≈ 0,828**, PR-AUC ≈ 0,314, recall@top-10% ≈ 0,590,
-Brier 0,0281 dibanding baseline 0,0334.
+Anda seharusnya melihat **TEST ROC-AUC ≈ 0,827**, PR-AUC ≈ 0,312, recall@top-10% ≈ 0,592,
+Brier 0,0282 dibanding baseline 0,0334. Hasil lengkap, terukur langsung di Snowflake:
+
+| Split | ROC-AUC | PR-AUC | recall@top-10% | Brier |
+|---|---|---|---|---|
+| TRAIN | 0,9311 | 0,5522 | 0,7803 | 0,0177 |
+| VALID | 0,8456 | 0,3951 | 0,5938 | 0,0265 |
+| **TEST** | **0,8274** | **0,3115** | **0,5915** | **0,0282** |
+
+TEST berisi 41.217 baris dengan 1.427 positif, base rate 3,46%.
+
+Angka desimal ketiga wajar bergeser sedikit. Channel Anaconda Snowflake memakai
+**xgboost 3.3.0**, sementara varian `.py` dari langkah ini kalau dijalankan di laptop
+biasanya me-resolve XGBoost versi lebih lama; selisih itu sendiri menggeser TEST ROC-AUC
+antara 0,827 dan 0,828. Selama masih di rentang itu, run Anda sehat.
 
 **Kalau Anda melihat 0,97, ada yang salah.** Percobaan pertama kami menghasilkan 0,9725 — bukan
 karena kebocoran temporal, tapi karena generator membuat pola keterlambatan bayar sebelum lapse
@@ -440,7 +453,8 @@ pulih, dan ramp-nya diperlebar jadi delapan bulan. Model demo yang mencetak 0,97
 bisnis seperti ini bukan mengesankan — itu rusak.
 
 Ablasi, untuk membuktikan setiap fitur berkontribusi: tenure saja 0,711 → tambah billing 0,811 →
-fitur lengkap 0,828.
+fitur lengkap 0,827. Notebook mencetak tiga baris ini tapi tidak menyimpannya, jadi bacalah
+dari output sel-nya, bukan dari `ML_MODEL_METRICS`.
 
 ### Keterbatasan M6 yang terdokumentasi
 
