@@ -23,7 +23,7 @@ Mata uang Rupiah (IDR); semua label dalam bahasa Inggris.
 1. [Apa yang Anda Dapatkan](#1-apa-yang-anda-dapatkan)
 2. [Masalah Bisnis yang Dijawab](#2-masalah-bisnis-yang-dijawab)
 3. [Prasyarat](#3-prasyarat)
-4. [Langkah 0 — Koneksi ke Snowflake](#langkah-0--koneksi-ke-snowflake)
+4. [Langkah 0 — Menyalin repo ini ke Snowflake](#langkah-0--menyalin-repo-ini-ke-snowflake)
 5. [Langkah 1 — Setup dan Data Sintetis](#langkah-1--setup-dan-data-sintetis)
 6. [Langkah 2 — Model Machine Learning](#langkah-2--model-machine-learning)
 7. [Langkah 3 — Dokumen Produk dan Cortex Search](#langkah-3--dokumen-produk-dan-cortex-search)
@@ -36,6 +36,7 @@ Mata uang Rupiah (IDR); semua label dalam bahasa Inggris.
 14. [Troubleshooting](#troubleshooting)
 15. [Biaya dan Pembersihan](#biaya-dan-pembersihan)
 16. [Struktur Repository](#struktur-repository)
+17. [Lampiran — Memakai CLI](#lampiran--memakai-cli)
 
 ---
 
@@ -141,30 +142,17 @@ Kalau hasilnya `OK`, Anda siap. Kalau error, **jangan lanjut** — semua langkah
 > tertentu alih-alih `ANY_REGION` — misalnya `'AWS_US'`. Periksa dulu kebijakan data residency
 > Anda sebelum mengaktifkannya di akun produksi. Untuk akun demo, `ANY_REGION` aman.
 
-### 3.3 Tooling di komputer Anda
+### 3.3 Yang perlu Anda pasang di komputer
 
-| Tool | Untuk apa | Instalasi |
-|------|-----------|-----------|
-| **Snowflake CLI** (`snow`) | Menjalankan semua script `.sql` | `pip install snowflake-cli` |
-| **Python 3.11** | Dua langkah butuh Python (training XGBoost, render PDF) | conda atau pyenv |
+**Tidak ada.** Cukup browser.
 
-Paket Python:
+Tidak ada CLI yang perlu diinstal, tidak ada environment Python yang perlu dibuat, tidak ada
+paket yang perlu diunduh. Snowflake menyalin repository ini ke dalam akun Anda, dan Anda
+menjalankan semuanya dari Snowsight — SQL lewat editor Workspace, dan dua langkah Python sebagai
+Snowflake Notebook.
 
-```bash
-# Sangat disarankan pakai environment terpisah
-conda create -n meridian python=3.11 -y
-conda activate meridian
-
-pip install "snowflake-connector-python[pandas]" \
-            xgboost==1.7.3 scikit-learn pandas numpy reportlab
-```
-
-Verifikasi:
-
-```bash
-snow --version
-python -c "import xgboost, sklearn, pandas, reportlab, snowflake.connector; print('deps ok')"
-```
+> Kalau Anda lebih suka bekerja dari terminal, jalur Snowflake CLI tetap berfungsi dan
+> didokumentasikan di [Lampiran — Memakai CLI](#lampiran--memakai-cli).
 
 ### 3.4 Opsional: web search untuk agent
 
@@ -176,48 +164,109 @@ Aktifkan di Snowsight: **AI & ML → Agents → Settings → Web access**.
 
 ---
 
-## Langkah 0 — Koneksi ke Snowflake
+## Langkah 0 — Menyalin repo ini ke Snowflake
 
-Buat named connection supaya Anda tidak pernah menulis kredensial di dalam script. CLI menyimpan
-ini di `~/.snowflake/connections.toml`, yang berada **di luar repository** — jadi tidak ada
-rahasia yang masuk ke repo.
+**Waktu: 10 menit. Tanpa menulis kode.**
 
-```bash
-snow connection add
+Alih-alih mengunduh repo ke laptop, Anda meminta Snowflake menyambungkan diri ke GitHub dan
+menyalinnya ke dalam akun Anda. Hasilnya disebut **Workspace** — tempat kerja berisi folder dan
+file di dalam Snowflake, mirip sebuah project di editor.
+
+### 0a — Buka Workspaces
+
+1. Di menu kiri, pilih **Projects** → **Workspaces**
+2. Klik tombol **+** di kanan atas
+3. Pilih **Git Workspace**
+
+> Kalau menu yang muncul bertuliskan **From Git repository**, itu hal yang sama. Label tombol
+> bisa berbeda sedikit antar rilis Snowsight.
+
+### 0b — Isi form
+
+**Repository URL**
+
+| Field | Isi dengan |
+|---|---|
+| Repository URL | `https://github.com/arzamuhammad/meridian-life-agentic-ai-demo` |
+
+**API Integration**
+
+Snowflake perlu izin untuk berbicara dengan GitHub. Izin ini bernama **API integration**, dan
+bisa dibuat **langsung dari dalam form ini** — tanpa menulis SQL.
+
+Klik dropdown **API Integration**:
+
+- **Kalau sudah ada pilihan** yang mencakup github.com, pilih saja lalu lanjut.
+- **Kalau kosong**, klik **+ Create a new API integration** dan isi:
+
+| Field | Isi dengan | Catatan |
+|---|---|---|
+| Integration name | `GITHUB_API_INT` | **Harus HURUF BESAR semua.** Huruf kecil akan ditolak |
+| Allowed domain | `github.com` | Cukup domainnya, tanpa `https://` |
+
+Klik **Create**. Integration ini hanya perlu dibuat **sekali per akun** — orang berikutnya cukup
+memilihnya dari dropdown.
+
+> **Apakah ini sama dengan External Access Integration? Bukan.** Namanya mirip tapi fungsinya
+> berbeda. **API integration** dipakai Snowflake untuk berbicara dengan penyedia Git.
+> **External Access Integration** dipakai kalau *kode Anda* perlu menjangkau internet, misalnya
+> `pip install`. Demo ini hanya butuh yang pertama.
+
+**Workspace name — jangan diubah**
+
+| Field | Nilainya |
+|---|---|
+| Workspace name | `meridian-life-agentic-ai-demo` |
+
+Snowsight mengisinya otomatis dari nama repo. **Biarkan apa adanya.** File
+`07_streamlit/71_deploy_streamlit.sql` menyebut nama ini secara literal, dan namanya bersifat
+*case-sensitive*. Kalau Anda menggantinya, Anda harus mengeditnya juga di file itu.
+
+**Metode autentikasi**
+
+Pilih **Public repository**, lalu klik **Create**. Repo ini publik, jadi tidak perlu token.
+Konsekuensinya Anda **tidak bisa** mengirim perubahan balik ke GitHub — dan untuk belajar itu
+justru aman: Anda bebas bereksperimen tanpa takut merusak apa pun.
+
+### 0c — Pastikan berhasil
+
+Panel kiri harus menampilkan:
+
+```
+01_setup/   02_generate_data/   03_ml/   04_search/
+05_semantic_view/   06_agent/   07_streamlit/   08_closed_loop/   docs/
+LICENSE   README.md   README-IND.md
 ```
 
-Jawab pertanyaannya. Entri minimal yang bekerja seperti ini:
+Klik `01_setup/` lalu `01_setup.sql`. File-nya harus terbuka dan bisa dibaca.
 
-```toml
-[meridian]
-account   = "MYORG-MYACCOUNT"
-user      = "MY_USER"
-role      = "ACCOUNTADMIN"
-warehouse = "GEN2_SMALL"
-database  = "INSURANCE_DEMO"
-schema    = "CORE"
-authenticator = "externalbrowser"   # SSO. Atau pakai key pair / PAT.
-```
+### 0d — Pilih warehouse
 
-Tes:
+Di kanan atas editor ada pemilih warehouse. Pilih warehouse apa pun yang tersedia untuk
+sekarang. `01_setup.sql` akan membuat `GEN2_SMALL` di langkah berikutnya; setelah itu pindah ke
+sana.
 
-```bash
-snow connection test -c meridian
-```
+---
 
-Mulai dari sini, ganti `meridian` dengan nama koneksi Anda sendiri. Dua script Python membaca
-koneksi dari environment variable:
+## Cara menjalankan file SQL — baca sekali saja
 
-```bash
-export SNOWFLAKE_CONNECTION_NAME=meridian
-```
+Semua file `.sql` di repo ini dijalankan dengan cara yang sama, dan inilah bagian yang paling
+sering ditanyakan.
 
-> **Jangan pernah** commit `connections.toml`, private key, atau personal access token.
-> `.gitignore` yang disertakan sudah memblokir yang umum, tapi kebiasaan paling aman adalah
-> menyimpan kredensial hanya di config CLI.
+**Jangan jalankan seluruh file sekaligus.** Jalankan **satu statement demi satu**:
 
-**Jalankan semua perintah di bawah dari root repository**, karena langkah deploy Streamlit
-memakai path relatif terhadap root.
+1. Buka file-nya di editor Workspace
+2. Letakkan kursor di dalam statement pertama
+3. Tekan **Cmd+Enter** (macOS) atau **Ctrl+Enter** (Windows)
+4. Baca hasilnya, lalu pindahkan kursor ke statement berikutnya dan ulangi
+
+Kenapa satu per satu? Karena setiap langkah memberi tahu Anda sesuatu. Kalau statement ke-4
+gagal, Anda ingin langsung melihatnya dengan statement 1–3 sudah diterapkan — bukan mencarinya
+di tumpukan output. Beberapa file juga mencetak hasil verifikasi yang memang harus Anda baca
+sebelum lanjut.
+
+> Satu statement berakhir di tanda titik koma `;`. Snowsight menyorot statement tempat kursor
+> Anda berada, jadi Anda selalu tahu apa yang akan dijalankan.
 
 ---
 
@@ -225,16 +274,24 @@ memakai path relatif terhadap root.
 
 Membuat warehouse, database, schema, stage, dan seluruh 14 tabel data.
 
-```bash
-snow sql -c meridian -f 01_setup/01_setup.sql
-snow sql -c meridian -f 02_generate_data/20_gen_helpers.sql
-snow sql -c meridian -f 02_generate_data/21_dimensions.sql
-snow sql -c meridian -f 02_generate_data/22_fact_policy.sql
-snow sql -c meridian -f 02_generate_data/23_fact_policy_children.sql
-snow sql -c meridian -f 02_generate_data/24_fact_agent.sql
-snow sql -c meridian -f 02_generate_data/25_fact_target_crm.sql
-snow sql -c meridian -f 02_generate_data/26_helper_views.sql
+Buka tiap file di Workspace dan jalankan statement demi statement, dalam urutan ini:
+
 ```
+01_setup/01_setup.sql
+02_generate_data/20_gen_helpers.sql
+02_generate_data/21_dimensions.sql
+02_generate_data/22_fact_policy.sql
+02_generate_data/23_fact_policy_children.sql
+02_generate_data/24_fact_agent.sql
+02_generate_data/25_fact_target_crm.sql
+02_generate_data/26_helper_views.sql
+```
+
+> Setelah `01_setup.sql` selesai, ganti pemilih warehouse di kanan atas ke **GEN2_SMALL** —
+> file itu baru saja membuatnya.
+>
+> Beberapa statement di `22`, `23`, dan `24` butuh 30–60 detik. Itu normal; mereka membuat
+> ratusan ribu baris. Tunggu satu selesai sebelum memulai berikutnya.
 
 **Runtime**: sekitar 4 menit total.
 
@@ -247,8 +304,8 @@ query di semantic view, dan skrip demo semuanya merujuk angka spesifik.
 
 ### Checkpoint 1 — verifikasi sebelum lanjut
 
-```bash
-snow sql -c meridian -f 02_generate_data/27_verify_stop1.sql
+```
+02_generate_data/27_verify_stop1.sql
 ```
 
 Jumlah baris yang diharapkan:
@@ -297,23 +354,36 @@ bekerja, bukan menebak.
 
 ## Langkah 2 — Model Machine Learning
 
-Tujuh model. Hanya yang pertama butuh Python; sisanya SQL, memakai fungsi ML bawaan Snowflake.
+Tujuh model. Enam murni SQL. Hanya M1 yang butuh Python, dan itu dijalankan sebagai
+**Snowflake Notebook** — tetap tanpa instalasi lokal.
 
-```bash
-# M1 — prediksi lapse (panel point-in-time, lalu XGBoost)
-snow sql -c meridian -f 03_ml/31_m1_lapse_panel.sql
-python 03_ml/32_m1_train_xgboost.py
+Jalankan dalam urutan ini:
 
-# M2, M6 — forecasting dan anomaly detection bawaan Snowflake
-snow sql -c meridian -f 03_ml/33_m2_revenue_forecast.sql
-snow sql -c meridian -f 03_ml/34_m6_anomaly_detection.sql
+| Urutan | File | Cara menjalankan |
+|--------|------|------------------|
+| 1 | `03_ml/31_m1_lapse_panel.sql` | Editor Workspace, statement demi statement |
+| 2 | `03_ml/32_m1_train_xgboost.ipynb` | **Notebook** — lihat di bawah |
+| 3 | `03_ml/33_m2_revenue_forecast.sql` | Editor Workspace |
+| 4 | `03_ml/34_m6_anomaly_detection.sql` | Editor Workspace |
+| 5 | `03_ml/35_m3_agent_scoring.sql` | Editor Workspace |
+| 6 | `03_ml/36_m5_customer_clv.sql` | Editor Workspace |
+| 7 | `03_ml/37_m7_cross_sell.sql` | Editor Workspace |
+| 8 | `03_ml/38_m4_nba_recommendations.sql` | Editor Workspace |
 
-# M3, M5, M7, M4 — harus dijalankan dalam urutan ini
-snow sql -c meridian -f 03_ml/35_m3_agent_scoring.sql
-snow sql -c meridian -f 03_ml/36_m5_customer_clv.sql
-snow sql -c meridian -f 03_ml/37_m7_cross_sell.sql
-snow sql -c meridian -f 03_ml/38_m4_nba_recommendations.sql
-```
+### Menjalankan notebook M1
+
+1. Di daftar file Workspace, klik `03_ml/32_m1_train_xgboost.ipynb`
+2. Di kanan atas, buka menu **Packages** dan tambahkan: `xgboost`, `scikit-learn`, `pandas`,
+   `numpy`
+3. Pilih warehouse `GEN2_SMALL`
+4. Jalankan sel dari atas ke bawah (**Cmd/Ctrl+Enter** per sel, atau **Run all**)
+
+Notebook memakai `get_active_session()`, jadi sudah terautentikasi sebagai Anda. Tidak ada yang
+perlu dikonfigurasi.
+
+> Versi `.py` dari langkah ini tetap ada di repo untuk pengguna CLI. Notebook dan script berbagi
+> kode yang sama — notebook mengambil fungsi helper-nya langsung dari script — jadi hasilnya
+> identik.
 
 **Runtime**: sekitar 12 menit, 3 menit di antaranya untuk XGBoost.
 
@@ -389,11 +459,15 @@ Langkah ini menunjukkan data tidak terstruktur bekerja berdampingan dengan star 
 menulis brosur, dirender jadi PDF ber-branding, lalu Snowflake mem-parsing, meng-chunk, dan
 mengindeksnya.
 
-```bash
-snow sql -c meridian -f 04_search/41_generate_brochures.sql
-python 04_search/42_render_pdfs.py
-snow sql -c meridian -f 04_search/43_parse_and_search.sql
-```
+| Urutan | File | Cara menjalankan |
+|--------|------|------------------|
+| 1 | `04_search/41_generate_brochures.sql` | Editor Workspace, statement demi statement |
+| 2 | `04_search/42_render_pdfs.ipynb` | **Notebook** — tambahkan paket `reportlab` dulu |
+| 3 | `04_search/43_parse_and_search.sql` | Editor Workspace |
+
+Notebook membangun setiap PDF di memori lalu mengalirkannya langsung ke `@STAGE_DOC` dengan
+`session.file.put_stream()` — tidak ada file yang ditulis ke disk, jadi tidak ada langkah unggah
+dan tidak ada `PUT` yang bisa salah.
 
 **Runtime**: sekitar 9 menit. Langkah `41` yang paling lama — 24 panggilan `AI_COMPLETE`
 berurutan.
@@ -430,9 +504,12 @@ Semantic view adalah yang memungkinkan Cortex Analyst mengubah pertanyaan bahasa
 SQL yang benar. Ia mendeklarasikan tabel, cara join-nya, kolom mana yang fakta dan dimensi,
 ekspresi mana yang metrik, dan sekumpulan contoh query terverifikasi.
 
-```bash
-snow sql -c meridian -f 05_semantic_view/51_semantic_view.sql
 ```
+05_semantic_view/51_semantic_view.sql
+```
+
+File ini berisi satu statement `CREATE OR REPLACE SEMANTIC VIEW` yang sangat panjang. Letakkan
+kursor di mana saja di dalamnya dan tekan **Cmd/Ctrl+Enter** sekali.
 
 Hasil: `MERIDIAN_SALES_INTELLIGENCE` — 22 tabel, 21 relationship, 44 fakta, 94 dimensi,
 40 metrik, 12 verified query.
@@ -474,10 +551,10 @@ Ini menghabiskan waktu kami berjam-jam. Kalau Anda mengedit `51_semantic_view.sq
 
 ## Langkah 5 — Cortex Agent
 
-```bash
-snow sql -c meridian -f 06_agent/61_agent_procedures.sql
-snow sql -c meridian -f 06_agent/62_pptx_procedure.sql
-snow sql -c meridian -f 06_agent/63_agent.sql
+```
+06_agent/61_agent_procedures.sql
+06_agent/62_pptx_procedure.sql
+06_agent/63_agent.sql
 ```
 
 Membuat 10 stored procedure, satu pembuat PowerPoint, dan
@@ -526,17 +603,23 @@ pemeriksaan ini kalau Anda mengubah tool-nya; ini bukti terkuat bahwa desainnya 
 
 ## Langkah 6 — Dashboard Streamlit
 
-```bash
-# Jalankan dari root repository — path PUT-nya relatif
-snow sql -c meridian -f 07_streamlit/71_deploy_streamlit.sql
+```
+07_streamlit/71_deploy_streamlit.sql
 ```
 
 Membuat `MERIDIAN_COMMAND_CENTER_DASHBOARD`, 7 halaman, chart Plotly, branding Meridian. Buka di
 Snowsight lewat **Projects → Streamlit**.
 
-> **Kalau PUT gagal**, kemungkinan client Anda tidak bisa me-resolve `file://./`. Ganti `./` di
-> ketiga pernyataan PUT dengan path absolut ke clone Anda. Catatan: path yang mengandung spasi
-> harus dikutip: `PUT 'file:///path dengan spasi/app.py' @STAGE/ ...`.
+File ini **tidak memakai `PUT`**. Ia memakai `COPY FILES` untuk memindahkan `app.py`,
+`environment.yml`, dan `.streamlit/config.toml` dari Workspace Anda ke `@STAGE_STREAMLIT_APP`,
+lalu membuat objek Streamlit-nya. Jalankan statement demi statement dan baca query
+verifikasinya — harusnya muncul tepat 3 file.
+
+> **Nama Workspace berpengaruh di sini.** Path sumber `COPY FILES` memuat
+> `"meridian-life-agentic-ai-demo"`. Kalau Anda mengganti nama Workspace, jalankan
+> `SHOW TERSE WORKSPACES IN SCHEMA USER$.PUBLIC;` (statement pertama di file itu), lalu masukkan
+> nama persis Anda ke kedua statement `COPY FILES`. Namanya *case-sensitive* dan tanda kutip
+> gandanya wajib.
 
 `environment.yml` sengaja tidak menyematkan versi Python — biarkan Snowflake yang memilih, atau
 deployment bisa gagal karena kombinasi yang tidak didukung.
@@ -545,8 +628,8 @@ deployment bisa gagal karena kombinasi yang tidak didukung.
 
 ## Langkah 7 — Closed Loop
 
-```bash
-snow sql -c meridian -f 08_closed_loop/81_closed_loop.sql
+```
+08_closed_loop/81_closed_loop.sql
 ```
 
 Inilah yang mengubah demo dari "AI menyarankan sesuatu" menjadi "AI menyarankan sesuatu dan kita
@@ -627,6 +710,11 @@ Enam keputusan yang perlu Anda pahami sebelum mengubah apa pun:
 | Gejala | Penyebab dan solusi |
 |--------|---------------------|
 | `unknown model "claude-4-sonnet"` | Cross-region inference belum aktif. Lihat [3.2](#32-cross-region-inference--wajib) |
+| Pembuatan Workspace gagal di bagian integration | Nama integration harus **HURUF BESAR semua**. Huruf kecil ditolak |
+| `COPY FILES` tidak menemukan apa pun | Nama Workspace Anda berbeda dari yang ada di SQL. Jalankan `SHOW TERSE WORKSPACES IN SCHEMA USER$.PUBLIC;` dan pakai nama persis Anda, dalam tanda kutip ganda |
+| Notebook tidak bisa `import xgboost` atau `reportlab` | Tambahkan di menu **Packages** di kanan atas notebook, lalu restart session-nya |
+| `get_active_session()` gagal | Anda menjalankan file `.py`, bukan `.ipynb`. Notebook punya session aktif; script tidak |
+| Sebuah statement seperti menggantung | Beberapa statement generate data butuh 30–60 detik. Pastikan warehouse tidak suspended, dan biarkan selesai |
 | `Unsupported subquery type` | `EXISTS` berkorelasi dengan predikat rentang. Tulis ulang sebagai semi-join |
 | Hanya sebagian cabang mendapat agen | Anda memakai `RANDOM(seed)` lagi. Fungsi itu dievaluasi ulang per baris pada join perantara, sehingga pemilihan berbobot kolaps. Pakai UDF `RND()` berbasis hash |
 | AUC test M1 ≈ 0,97 | Artefak generator, bukan model bagus. Lihat [Checkpoint 2](#checkpoint-2--metrik-m1-yang-jujur) |
@@ -637,7 +725,7 @@ Enam keputusan yang perlu Anda pahami sebelum mengubah apa pun:
 | PDF brosur ter-render sebagai satu blok tanpa jeda | `AI_COMPLETE` mengembalikan VARIANT. Cast dulu: `AI_COMPLETE(...)::STRING`. Tanpa cast, isinya string JSON dengan `\n` literal dan tanda kutip pembungkus |
 | Tool agent tidak mengembalikan apa pun yang berguna | Procedure-nya memakai `RETURNS TABLE`. Ubah ke `RETURNS VARCHAR` dengan satu sel JSON |
 | `invalid identifier 'P_BRANCH_ID'` | Kurang awalan titik dua di dalam body `LANGUAGE SQL`. Pakai `:P_BRANCH_ID` |
-| PUT gagal dengan "unexpected" | Path mengandung spasi tanpa tanda kutip. Kutip seluruh argumen `file://` |
+| PUT gagal dengan "unexpected" | Path mengandung spasi tanpa tanda kutip. Kutip seluruh argumen `file://`. Hanya relevan di jalur CLI |
 | Deploy Streamlit gagal karena paket | Hapus sematan `python=` dari `environment.yml` |
 | Agent tidak muncul di Snowsight | Berikan `USAGE ON AGENT`, dan pastikan user punya default warehouse |
 | M6 menandai terlalu banyak bulan-cabang | Sudah diketahui dan terdokumentasi. Pakai deret rolling 3 bulan; `IS_CONFIRMED_ANOMALY` menekan false positive tapi mengurangi recall |
@@ -704,7 +792,15 @@ meridian-life-demo/
 │   ├── 26_helper_views.sql        6 view termasuk V_BRANCH_ACHIEVEMENT
 │   └── 27_verify_stop1.sql        checkpoint 1
 ├── 03_ml/                         M1–M7 (31–38)
+│   ├── 31_m1_lapse_panel.sql
+│   ├── 32_m1_train_xgboost.ipynb  ← notebook (disarankan)
+│   ├── 32_m1_train_xgboost.py     ← kode sama, untuk pengguna CLI
+│   └── 33–38 …
 ├── 04_search/                     brosur → PDF → Cortex Search (41–43)
+│   ├── 41_generate_brochures.sql
+│   ├── 42_render_pdfs.ipynb       ← notebook (disarankan)
+│   ├── 42_render_pdfs.py          ← kode sama, untuk pengguna CLI
+│   └── 43_parse_and_search.sql
 ├── 05_semantic_view/
 │   ├── 51_semantic_view.sql
 │   └── dedupe_synonyms.py         jalankan setelah mengedit synonym
@@ -722,6 +818,46 @@ meridian-life-demo/
     ├── demo-guideline.md          skrip demo per scene
     └── data-dictionary.md         seluruh tabel dan kolom
 ```
+
+---
+
+## Lampiran — Memakai CLI
+
+Jalur Workspace di atas tidak butuh instalasi apa pun, dan itu yang kami sarankan. Kalau Anda
+lebih suka bekerja dari terminal, semuanya tetap berfungsi.
+
+```bash
+pip install snowflake-cli
+snow connection add          # membuat ~/.snowflake/connections.toml, di luar repo ini
+snow connection test -c meridian
+export SNOWFLAKE_CONNECTION_NAME=meridian
+```
+
+Lalu, **dari root repository**:
+
+```bash
+snow sql -c meridian -f 01_setup/01_setup.sql
+snow sql -c meridian -f 02_generate_data/20_gen_helpers.sql
+# ... dan seterusnya, dalam urutan yang sama dengan langkah-langkah di atas
+```
+
+Untuk dua langkah Python, pakai file `.py` alih-alih notebook. Keduanya butuh environment lokal:
+
+```bash
+conda create -n meridian python=3.11 -y && conda activate meridian
+pip install "snowflake-connector-python[pandas]" \
+            xgboost scikit-learn pandas numpy reportlab
+
+python 03_ml/32_m1_train_xgboost.py
+python 04_search/42_render_pdfs.py
+```
+
+Untuk deploy Streamlit, ganti statement `COPY FILES` dengan tiga perintah `PUT` — bentuk
+persisnya ada di bagian akhir `07_streamlit/71_deploy_streamlit.sql`.
+
+> **Jangan pernah** commit `connections.toml`, private key, atau personal access token.
+> `.gitignore` yang disertakan sudah memblokir yang umum, tapi kebiasaan paling aman adalah
+> menyimpan kredensial hanya di config CLI.
 
 ---
 

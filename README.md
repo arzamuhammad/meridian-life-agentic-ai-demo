@@ -22,7 +22,7 @@ Currency is Indonesian Rupiah (IDR); all labels are in English.
 1. [What You Get](#1-what-you-get)
 2. [What This Demo Answers](#2-what-this-demo-answers)
 3. [Prerequisites](#3-prerequisites)
-4. [Step 0 — Connect to Snowflake](#step-0--connect-to-snowflake)
+4. [Step 0 — Clone this repo into Snowflake](#step-0--clone-this-repo-into-snowflake)
 5. [Step 1 — Setup and Synthetic Data](#step-1--setup-and-synthetic-data)
 6. [Step 2 — Machine Learning Models](#step-2--machine-learning-models)
 7. [Step 3 — Product Documents and Cortex Search](#step-3--product-documents-and-cortex-search)
@@ -35,6 +35,7 @@ Currency is Indonesian Rupiah (IDR); all labels are in English.
 14. [Troubleshooting](#troubleshooting)
 15. [Cost and Teardown](#cost-and-teardown)
 16. [Repository Structure](#repository-structure)
+17. [Appendix — Using the CLI instead](#appendix--using-the-cli-instead)
 
 ---
 
@@ -137,30 +138,16 @@ If that returns `OK`, you are ready. If it errors, do not continue — every AI 
 > instead of `ANY_REGION` — for example `'AWS_US'`. Check what your data-residency policy
 > allows before enabling it in a production account. For a demo account, `ANY_REGION` is fine.
 
-### 3.3 Local tooling
+### 3.3 What you need on your computer
 
-| Tool | Why | Install |
-|------|-----|---------|
-| **Snowflake CLI** (`snow`) | Runs every `.sql` script | `pip install snowflake-cli` |
-| **Python 3.11** | Two steps need Python (XGBoost training, PDF rendering) | conda or pyenv |
+**Nothing.** Only a browser.
 
-Python packages:
+There is no CLI to install, no Python environment to create, and no packages to download.
+Snowflake clones this repository into your account and you run everything from Snowsight —
+SQL from the Workspace editor, and the two Python steps as Snowflake Notebooks.
 
-```bash
-# A dedicated environment is strongly recommended
-conda create -n meridian python=3.11 -y
-conda activate meridian
-
-pip install "snowflake-connector-python[pandas]" \
-            xgboost==1.7.3 scikit-learn pandas numpy reportlab
-```
-
-Verify:
-
-```bash
-snow --version
-python -c "import xgboost, sklearn, pandas, reportlab, snowflake.connector; print('deps ok')"
-```
+> If you would rather work from a terminal, the Snowflake CLI path still works and is
+> documented in [Appendix — Using the CLI instead](#appendix--using-the-cli-instead).
 
 ### 3.4 Optional: web search for the agent
 
@@ -171,48 +158,108 @@ Enable it in Snowsight: **AI & ML → Agents → Settings → Web access**.
 
 ---
 
-## Step 0 — Connect to Snowflake
+## Step 0 — Clone this repo into Snowflake
 
-Create a named connection so you never type credentials into a script. The CLI stores this in
-`~/.snowflake/connections.toml`, which is **outside this repository** — nothing secret ever
-enters the repo.
+**Time: 10 minutes. No code.**
 
-```bash
-snow connection add
+Instead of downloading the repo to your laptop, you ask Snowflake to connect to GitHub and copy
+it into your account. The result is a **Workspace** — a folder of files inside Snowflake, much
+like a project in an editor.
+
+### 0a — Open Workspaces
+
+1. In the left menu, choose **Projects** → **Workspaces**
+2. Click **+** at the top right
+3. Choose **Git Workspace**
+
+> If the menu says **From Git repository**, that is the same thing. Button labels differ
+> slightly between Snowsight releases.
+
+### 0b — Fill in the form
+
+**Repository URL**
+
+| Field | Value |
+|---|---|
+| Repository URL | `https://github.com/arzamuhammad/meridian-life-agentic-ai-demo` |
+
+**API Integration**
+
+Snowflake needs permission to talk to GitHub. That permission is called an **API integration**,
+and you can create it **from inside this form** — no SQL required.
+
+Click the **API Integration** dropdown:
+
+- **If an entry already covers github.com**, select it and move on.
+- **If it is empty**, click **+ Create a new API integration** and fill in:
+
+| Field | Value | Note |
+|---|---|---|
+| Integration name | `GITHUB_API_INT` | **Must be ALL CAPITALS.** Lower case is rejected |
+| Allowed domain | `github.com` | Domain only, no `https://` |
+
+Click **Create**. This is needed **once per account** — the next person just picks it from the
+dropdown.
+
+> **Is this the same as an External Access Integration? No.** The names are similar but the jobs
+> differ. An **API integration** lets Snowflake talk to a Git provider. An **External Access
+> Integration** is for when *your code* needs the internet, for example `pip install`. This
+> demo needs only the first.
+
+**Workspace name — leave it alone**
+
+| Field | Value |
+|---|---|
+| Workspace name | `meridian-life-agentic-ai-demo` |
+
+Snowsight fills this in from the repo name. **Keep it as it is.** The file
+`07_streamlit/71_deploy_streamlit.sql` refers to this name literally, and the name is
+case-sensitive. If you change it, you must edit that file too.
+
+**Authentication**
+
+Choose **Public repository**, then click **Create**. This repo is public, so no token is needed.
+The consequence is that you **cannot push changes back** to GitHub — which is exactly what you
+want while learning: experiment freely, break nothing.
+
+### 0c — Confirm it worked
+
+The left panel should show:
+
+```
+01_setup/   02_generate_data/   03_ml/   04_search/
+05_semantic_view/   06_agent/   07_streamlit/   08_closed_loop/   docs/
+LICENSE   README.md   README-IND.md
 ```
 
-Answer the prompts. A minimal working entry looks like this:
+Click `01_setup/` then `01_setup.sql`. The file should open and be readable.
 
-```toml
-[meridian]
-account   = "MYORG-MYACCOUNT"
-user      = "MY_USER"
-role      = "ACCOUNTADMIN"
-warehouse = "GEN2_SMALL"
-database  = "INSURANCE_DEMO"
-schema    = "CORE"
-authenticator = "externalbrowser"   # SSO. Or use a key pair / PAT.
-```
+### 0d — Pick a warehouse
 
-Test it:
+Top right of the editor there is a warehouse selector. Choose any available warehouse for now.
+`01_setup.sql` creates `GEN2_SMALL` in the next step; switch to it afterwards.
 
-```bash
-snow connection test -c meridian
-```
+---
 
-From here on, replace `meridian` with your own connection name. Two Python scripts read the
-connection from an environment variable:
+## How to run the SQL files — read this once
 
-```bash
-export SNOWFLAKE_CONNECTION_NAME=meridian
-```
+Every `.sql` file in this repo is run the same way, and this is the part people most often ask
+about.
 
-> **Never** commit `connections.toml`, a private key, or a personal access token. The included
-> `.gitignore` blocks the usual suspects, but the safest habit is to keep credentials in the
-> CLI config only.
+**Do not run the whole file at once.** Run it **statement by statement**:
 
-**Run every command below from the repository root**, because the Streamlit deploy step uses
-paths relative to it.
+1. Open the file in the Workspace editor
+2. Put the cursor anywhere inside the first statement
+3. Press **Cmd+Enter** (macOS) or **Ctrl+Enter** (Windows)
+4. Read the result, then move the cursor to the next statement and repeat
+
+Why one at a time? Because each step tells you something. If statement 4 fails, you want to see
+it immediately with statements 1–3 already applied — not hunt through a wall of output
+afterwards. Several files also print verification results you are meant to read before
+continuing.
+
+> A statement ends at the semicolon `;`. Snowsight highlights the statement your cursor is in,
+> so you can always see what will run.
 
 ---
 
@@ -220,16 +267,24 @@ paths relative to it.
 
 Creates the warehouse, database, schema, stages, and all 14 data tables.
 
-```bash
-snow sql -c meridian -f 01_setup/01_setup.sql
-snow sql -c meridian -f 02_generate_data/20_gen_helpers.sql
-snow sql -c meridian -f 02_generate_data/21_dimensions.sql
-snow sql -c meridian -f 02_generate_data/22_fact_policy.sql
-snow sql -c meridian -f 02_generate_data/23_fact_policy_children.sql
-snow sql -c meridian -f 02_generate_data/24_fact_agent.sql
-snow sql -c meridian -f 02_generate_data/25_fact_target_crm.sql
-snow sql -c meridian -f 02_generate_data/26_helper_views.sql
+Open each file in the Workspace and run it statement by statement, in this order:
+
 ```
+01_setup/01_setup.sql
+02_generate_data/20_gen_helpers.sql
+02_generate_data/21_dimensions.sql
+02_generate_data/22_fact_policy.sql
+02_generate_data/23_fact_policy_children.sql
+02_generate_data/24_fact_agent.sql
+02_generate_data/25_fact_target_crm.sql
+02_generate_data/26_helper_views.sql
+```
+
+> After `01_setup.sql` finishes, switch the warehouse selector at the top right to
+> **GEN2_SMALL** — that file just created it.
+>
+> Some statements in `22`, `23` and `24` take 30–60 seconds. That is normal; they are generating
+> hundreds of thousands of rows. Wait for one to finish before starting the next.
 
 **Runtime**: about 4 minutes total.
 
@@ -242,8 +297,8 @@ verified queries, and the demo script all reference specific numbers.
 
 ### Checkpoint 1 — verify before continuing
 
-```bash
-snow sql -c meridian -f 02_generate_data/27_verify_stop1.sql
+```
+02_generate_data/27_verify_stop1.sql
 ```
 
 Expected row counts:
@@ -291,24 +346,35 @@ genuinely working rather than guessing.
 
 ## Step 2 — Machine Learning Models
 
-Seven models. Only the first one needs Python; the rest are SQL, using Snowflake's built-in ML
-functions.
+Seven models. Six are pure SQL. Only M1 needs Python, and it runs as a **Snowflake Notebook** —
+still no local install.
 
-```bash
-# M1 — lapse prediction (point-in-time panel, then XGBoost)
-snow sql -c meridian -f 03_ml/31_m1_lapse_panel.sql
-python 03_ml/32_m1_train_xgboost.py
+Run in this order:
 
-# M2, M6 — Snowflake built-in forecasting and anomaly detection
-snow sql -c meridian -f 03_ml/33_m2_revenue_forecast.sql
-snow sql -c meridian -f 03_ml/34_m6_anomaly_detection.sql
+| Order | File | How to run |
+|-------|------|-----------|
+| 1 | `03_ml/31_m1_lapse_panel.sql` | Workspace editor, statement by statement |
+| 2 | `03_ml/32_m1_train_xgboost.ipynb` | **Notebook** — see below |
+| 3 | `03_ml/33_m2_revenue_forecast.sql` | Workspace editor |
+| 4 | `03_ml/34_m6_anomaly_detection.sql` | Workspace editor |
+| 5 | `03_ml/35_m3_agent_scoring.sql` | Workspace editor |
+| 6 | `03_ml/36_m5_customer_clv.sql` | Workspace editor |
+| 7 | `03_ml/37_m7_cross_sell.sql` | Workspace editor |
+| 8 | `03_ml/38_m4_nba_recommendations.sql` | Workspace editor |
 
-# M3, M5, M7, M4 — must run in this order
-snow sql -c meridian -f 03_ml/35_m3_agent_scoring.sql
-snow sql -c meridian -f 03_ml/36_m5_customer_clv.sql
-snow sql -c meridian -f 03_ml/37_m7_cross_sell.sql
-snow sql -c meridian -f 03_ml/38_m4_nba_recommendations.sql
-```
+### Running the M1 notebook
+
+1. In the Workspace file tree, click `03_ml/32_m1_train_xgboost.ipynb`
+2. Top right, open the **Packages** menu and add: `xgboost`, `scikit-learn`, `pandas`, `numpy`
+3. Select the `GEN2_SMALL` warehouse
+4. Run the cells top to bottom (**Cmd/Ctrl+Enter** per cell, or **Run all**)
+
+The notebook uses `get_active_session()`, so it is already authenticated as you. There is
+nothing to configure.
+
+> The `.py` version of this step is still in the repo for CLI users. The notebook and the script
+> share the same code — the notebook slices its helper functions from the script — so their
+> results are identical.
 
 **Runtime**: about 12 minutes, of which the XGBoost step is 3.
 
@@ -382,11 +448,15 @@ you claim is perfect is a liability.
 This step shows unstructured data working alongside the star schema: AI writes brochures,
 renders them as branded PDFs, then Snowflake parses, chunks and indexes them.
 
-```bash
-snow sql -c meridian -f 04_search/41_generate_brochures.sql
-python 04_search/42_render_pdfs.py
-snow sql -c meridian -f 04_search/43_parse_and_search.sql
-```
+| Order | File | How to run |
+|-------|------|-----------|
+| 1 | `04_search/41_generate_brochures.sql` | Workspace editor, statement by statement |
+| 2 | `04_search/42_render_pdfs.ipynb` | **Notebook** — add the `reportlab` package first |
+| 3 | `04_search/43_parse_and_search.sql` | Workspace editor |
+
+The notebook builds each PDF in memory and streams it straight to `@STAGE_DOC` with
+`session.file.put_stream()` — nothing is written to disk, so there is no upload step and no
+`PUT` to get wrong.
 
 **Runtime**: about 9 minutes. Step `41` is the slow one — 24 sequential `AI_COMPLETE` calls.
 
@@ -422,9 +492,12 @@ The semantic view is what lets Cortex Analyst turn a plain-English question into
 It declares tables, how they join, which columns are facts and dimensions, which expressions
 are metrics, and a set of verified example queries.
 
-```bash
-snow sql -c meridian -f 05_semantic_view/51_semantic_view.sql
 ```
+05_semantic_view/51_semantic_view.sql
+```
+
+This file is one very long `CREATE OR REPLACE SEMANTIC VIEW` statement. Put the cursor anywhere
+inside it and press **Cmd/Ctrl+Enter** once.
 
 Result: `MERIDIAN_SALES_INTELLIGENCE` — 22 tables, 21 relationships, 44 facts, 94 dimensions,
 40 metrics, 12 verified queries.
@@ -464,10 +537,10 @@ These cost us hours. If you edit `51_semantic_view.sql`, keep them in mind.
 
 ## Step 5 — Cortex Agent
 
-```bash
-snow sql -c meridian -f 06_agent/61_agent_procedures.sql
-snow sql -c meridian -f 06_agent/62_pptx_procedure.sql
-snow sql -c meridian -f 06_agent/63_agent.sql
+```
+06_agent/61_agent_procedures.sql
+06_agent/62_pptx_procedure.sql
+06_agent/63_agent.sql
 ```
 
 Creates 10 stored procedures, a PowerPoint generator, and
@@ -516,17 +589,23 @@ you change the tools; it is the strongest evidence the design works.
 
 ## Step 6 — Streamlit Dashboard
 
-```bash
-# Run from the repository root — the PUT paths are relative
-snow sql -c meridian -f 07_streamlit/71_deploy_streamlit.sql
+```
+07_streamlit/71_deploy_streamlit.sql
 ```
 
 Creates `MERIDIAN_COMMAND_CENTER_DASHBOARD`, 7 pages, Plotly charts, Meridian branding.
 Open it in Snowsight under **Projects → Streamlit**.
 
-> **If the PUT fails**, your client may not resolve `file://./`. Replace `./` in the three PUT
-> statements with the absolute path to your clone. Note that paths containing spaces must be
-> quoted: `PUT 'file:///path with spaces/app.py' @STAGE/ ...`.
+This file has no `PUT`. It uses `COPY FILES` to move `app.py`, `environment.yml` and
+`.streamlit/config.toml` from your Workspace into `@STAGE_STREAMLIT_APP`, then creates the
+Streamlit object. Run it statement by statement and read the verification query — you should
+see exactly 3 files.
+
+> **The Workspace name matters here.** The `COPY FILES` source path contains
+> `"meridian-life-agentic-ai-demo"`. If you renamed your Workspace, run
+> `SHOW TERSE WORKSPACES IN SCHEMA USER$.PUBLIC;` (the first statement in the file), then put
+> your exact name into both `COPY FILES` statements. The name is case-sensitive and the double
+> quotes are required.
 
 `environment.yml` deliberately pins no Python version — let Snowflake choose, or deployment
 can fail on an unsupported combination.
@@ -535,8 +614,8 @@ can fail on an unsupported combination.
 
 ## Step 7 — Closed Loop
 
-```bash
-snow sql -c meridian -f 08_closed_loop/81_closed_loop.sql
+```
+08_closed_loop/81_closed_loop.sql
 ```
 
 This is what turns the demo from "AI suggests things" into "AI suggests things and we know
@@ -615,6 +694,11 @@ Six decisions worth understanding before you modify anything:
 | Symptom | Cause and fix |
 |---------|---------------|
 | `unknown model "claude-4-sonnet"` | Cross-region inference not enabled. See [3.2](#32-cross-region-inference--required) |
+| Workspace creation fails on the integration | The integration name must be **ALL CAPITALS**. Lower case is rejected |
+| `COPY FILES` finds nothing | Your Workspace name differs from the one in the SQL. Run `SHOW TERSE WORKSPACES IN SCHEMA USER$.PUBLIC;` and use your exact name, in double quotes |
+| Notebook cannot import `xgboost` or `reportlab` | Add it in the **Packages** menu at the top right of the notebook, then restart the session |
+| `get_active_session()` fails | You are running the `.py` file rather than the `.ipynb`. Notebooks have an active session; scripts do not |
+| A statement seems to hang | Some data-generation statements take 30–60 seconds. Check no warehouse is suspended, and let it finish |
 | `Unsupported subquery type` | A correlated `EXISTS` with a range predicate. Rewrite as a semi-join |
 | Only some branches got agents | You reintroduced `RANDOM(seed)`. It is re-evaluated per row of an intermediate join, so weighted picks collapse. Use the hash-based `RND()` UDFs |
 | M1 test AUC ≈ 0.97 | Generator artifact, not a good model. See [Checkpoint 2](#checkpoint-2--the-honest-m1-metrics) |
@@ -625,7 +709,7 @@ Six decisions worth understanding before you modify anything:
 | Brochure PDFs render as one unbroken blob | `AI_COMPLETE` returns VARIANT. Cast it: `AI_COMPLETE(...)::STRING`. Without the cast you get a JSON string with literal `\n` and wrapping quotes |
 | Agent tool returns nothing usable | The procedure uses `RETURNS TABLE`. Change it to `RETURNS VARCHAR` with a single JSON cell |
 | `invalid identifier 'P_BRANCH_ID'` | Missing colon prefix inside a `LANGUAGE SQL` body. Use `:P_BRANCH_ID` |
-| PUT fails with "unexpected" | Unquoted path containing spaces. Quote the whole `file://` argument |
+| PUT fails with "unexpected" | Unquoted path containing spaces. Quote the whole `file://` argument. Only relevant on the CLI path |
 | Streamlit deploy fails on packages | Remove any `python=` pin from `environment.yml` |
 | Agent missing in Snowsight | Grant `USAGE ON AGENT`, and check the user has a default warehouse set |
 | M6 flags too many branch-months | Known and documented. Use the 3-month rolling series; `IS_CONFIRMED_ANOMALY` cuts false positives but loses recall |
@@ -692,7 +776,15 @@ meridian-life-demo/
 │   ├── 26_helper_views.sql        6 views incl. V_BRANCH_ACHIEVEMENT
 │   └── 27_verify_stop1.sql        checkpoint 1
 ├── 03_ml/                         M1–M7 (31–38)
+│   ├── 31_m1_lapse_panel.sql
+│   ├── 32_m1_train_xgboost.ipynb  ← notebook (recommended)
+│   ├── 32_m1_train_xgboost.py     ← same code, for CLI users
+│   └── 33–38 …
 ├── 04_search/                     brochures → PDFs → Cortex Search (41–43)
+│   ├── 41_generate_brochures.sql
+│   ├── 42_render_pdfs.ipynb       ← notebook (recommended)
+│   ├── 42_render_pdfs.py          ← same code, for CLI users
+│   └── 43_parse_and_search.sql
 ├── 05_semantic_view/
 │   ├── 51_semantic_view.sql
 │   └── dedupe_synonyms.py         run after editing synonyms
@@ -710,6 +802,47 @@ meridian-life-demo/
     ├── demo-guideline.md          scene-by-scene demo script
     └── data-dictionary.md         every table and column
 ```
+
+---
+
+## Appendix — Using the CLI instead
+
+The Workspace path above needs nothing installed, and it is what we recommend. If you would
+rather work from a terminal, everything still works.
+
+```bash
+pip install snowflake-cli
+snow connection add          # creates ~/.snowflake/connections.toml, outside this repo
+snow connection test -c meridian
+export SNOWFLAKE_CONNECTION_NAME=meridian
+```
+
+Then, **from the repository root**:
+
+```bash
+snow sql -c meridian -f 01_setup/01_setup.sql
+snow sql -c meridian -f 02_generate_data/20_gen_helpers.sql
+# ... and so on, in the same order as the steps above
+```
+
+For the two Python steps, use the `.py` files rather than the notebooks. They need a local
+environment:
+
+```bash
+conda create -n meridian python=3.11 -y && conda activate meridian
+pip install "snowflake-connector-python[pandas]" \
+            xgboost scikit-learn pandas numpy reportlab
+
+python 03_ml/32_m1_train_xgboost.py
+python 04_search/42_render_pdfs.py
+```
+
+For the Streamlit deploy, replace the `COPY FILES` statements with three `PUT` commands — the
+tail of `07_streamlit/71_deploy_streamlit.sql` shows the exact form.
+
+> **Never** commit `connections.toml`, a private key, or a personal access token. The included
+> `.gitignore` blocks the usual suspects, but the safest habit is to keep credentials in the CLI
+> config only.
 
 ---
 
